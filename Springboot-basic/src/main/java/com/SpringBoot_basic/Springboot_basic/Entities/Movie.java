@@ -1,6 +1,7 @@
 package com.SpringBoot_basic.Springboot_basic.Entities;
 
 import com.SpringBoot_basic.Springboot_basic.Enums.Genre;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -19,14 +20,15 @@ public class Movie {
     @Enumerated(EnumType.STRING)
     @Column(name="genre",nullable = false,length = 50)
     private Genre genre;
-    @Column(name="releaseDate",nullable = false)
+    @Column(name="releasedate",nullable = false)
     private LocalDate releaseDate;
     @Column(name = "rating", nullable = false)
     private BigDecimal rating;
     @Column(name="available",nullable = false)
     private boolean available;
     @ManyToOne
-    @JoinColumn(name = "directorId",nullable = false)
+    @JsonIgnore
+    @JoinColumn(name = "directorid",nullable = false)
     private Director director;
 
     protected Movie() {
