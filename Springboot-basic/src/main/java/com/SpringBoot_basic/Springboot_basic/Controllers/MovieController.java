@@ -3,6 +3,7 @@ package com.SpringBoot_basic.Springboot_basic.Controllers;
 import com.SpringBoot_basic.Springboot_basic.Entities.Movie;
 import com.SpringBoot_basic.Springboot_basic.Repositories.MovieRepository;
 import com.SpringBoot_basic.Springboot_basic.Services.MovieService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,9 +18,13 @@ public class MovieController {
     }
 
     @GetMapping("/api/movies")
-    public List<Movie> getAllMovies(){
+    public ResponseEntity<?> getAllMovies(){
+        try{
+            List<Movie> movieList=movieService.getAllMovies();
+            return ResponseEntity.ok(movieList);
 
-        List<Movie> movieList=movieService.getAllMovies();
-        return movieList;
-    }
+        }catch (Exception e){
+            return ResponseEntity.status(500).body("SERVER ERROR: Database Error.\n\n\n\n\n"+e.getMessage());
+        }
+        }
 }
