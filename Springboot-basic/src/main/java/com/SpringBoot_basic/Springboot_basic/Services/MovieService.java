@@ -5,6 +5,7 @@ import com.SpringBoot_basic.Springboot_basic.Repositories.MovieRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -18,4 +19,9 @@ private final MovieRepository movieRepository;
     public List<Movie> getAllMovies(){
         return movieRepository.findAll();
     }
+
+    public Movie getMovieById(Integer movieId){
+        return movieRepository.findById(movieId).orElse(null);
+    }
+
 }
