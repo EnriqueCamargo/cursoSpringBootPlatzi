@@ -3,11 +3,11 @@ package com.SpringBoot_basic.Springboot_basic.Controllers;
 import com.SpringBoot_basic.Springboot_basic.Entities.Movie;
 import com.SpringBoot_basic.Springboot_basic.Repositories.MovieRepository;
 import com.SpringBoot_basic.Springboot_basic.Services.MovieService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingPathVariableException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -49,5 +49,29 @@ public class MovieController {
         }else {
             return  ResponseEntity.status(404).body("pelicula no encontrada");
         }
+    }
+    @PostMapping("/api/movies/post")
+    public ResponseEntity<?> postNewMovie(@RequestBody Movie movie){
+        try{
+            Movie savedMovie=movieService.postMovie(movie);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedMovie);
+        }catch(RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PutMapping("/api/movies/{id}")
+    public ResponseEntity<?> putMovieByTitle(@PathVariable Integer id, @RequestBody Movie updatedmovie){
+
+        try {
+            if (movieService.putMovieById(id, updatedmovie) != null) {
+                return ResponseEntity.ok().body("Actualizada con Exito\n"+updatedmovie);
+
+            } else {
+                ResponseEntity.status(404).body("Pelicula a Actualizar No encontrada");
+            }
+        }catch (Exception e){
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+        return null;
     }
 }
