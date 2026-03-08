@@ -5,6 +5,7 @@ import com.SpringBoot_basic.Springboot_basic.Entities.Movie;
 import com.SpringBoot_basic.Springboot_basic.Repositories.DirectorRepository;
 import com.SpringBoot_basic.Springboot_basic.Repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -38,7 +39,6 @@ public class MovieService {
         }
 
         Integer directorId = movie.getDirector().getId();
-        System.out.println("DEBUG -> Intentando buscar Director ID: " + directorId);
 
         if (!directorRepository.existsById(directorId)) {
             throw new RuntimeException("El director con ID " + directorId + " no existe.");
@@ -48,18 +48,21 @@ public class MovieService {
         if (movieRepository.existsByTitle(movie.getTitle())) {
             throw new RuntimeException("La película '" + movie.getTitle() + "' ya existe.");
         }
-
-
         movie.setId(null);
         return movieRepository.save(movie);
     }
 
     public Movie putMovieById(Integer id,Movie updatedMovie){
         if(movieRepository.existsById(id)){
+            updatedMovie.setId(id);
             return movieRepository.save(updatedMovie);
         }else{
             return null;
         }
+    }
+
+    public void deleteMoviebyId(Integer id){
+        movieRepository.deleteById(id);
     }
 
 

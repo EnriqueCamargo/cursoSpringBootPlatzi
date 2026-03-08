@@ -60,18 +60,26 @@ public class MovieController {
         }
     }
     @PutMapping("/api/movies/{id}")
-    public ResponseEntity<?> putMovieByTitle(@PathVariable Integer id, @RequestBody Movie updatedmovie){
+    public ResponseEntity<?> putMovieById(@PathVariable Integer id, @RequestBody Movie updatedmovie){
 
         try {
-            if (movieService.putMovieById(id, updatedmovie) != null) {
-                return ResponseEntity.ok().body("Actualizada con Exito\n"+updatedmovie);
-
-            } else {
-                ResponseEntity.status(404).body("Pelicula a Actualizar No encontrada");
+            Movie result= movieService.putMovieById(id, updatedmovie);
+            if(result!=null){
+                return ResponseEntity.ok(result);
+            }else {
+                return ResponseEntity.status(404).body("pelicula con Id "+id+" no encontrada");
             }
-        }catch (Exception e){
+        }catch (Exception e) {
             return ResponseEntity.status(500).body(e.getMessage());
         }
-        return null;
+    }
+    @DeleteMapping("/api/movies/{id}")
+    public ResponseEntity<?> deleteMovie(@PathVariable Integer id){
+        try{
+            movieService.deleteMoviebyId(id);
+        }catch(RuntimeException e){
+            return ResponseEntity.status(400).body(e.getMessage());
+        }
+        return ResponseEntity.ok().body("Pelicula eliminada Correctamente");
     }
 }

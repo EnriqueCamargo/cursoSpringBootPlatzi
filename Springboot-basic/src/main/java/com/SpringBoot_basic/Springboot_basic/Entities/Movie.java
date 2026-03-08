@@ -1,7 +1,9 @@
 package com.SpringBoot_basic.Springboot_basic.Entities;
 
 import com.SpringBoot_basic.Springboot_basic.Enums.Genre;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -27,11 +29,11 @@ public class Movie {
     @Column(name="available",nullable = false)
     private boolean available;
     @ManyToOne
-    @JsonIgnore
+    @JsonIgnoreProperties("movieList")
     @JoinColumn(name = "directorid",nullable = false)
     private Director director;
 
-    protected Movie() {
+    public Movie() {
     }
 
     public Movie(String title, Integer length, Genre genre, LocalDate releaseDate, BigDecimal rating, boolean available, Director director) {
