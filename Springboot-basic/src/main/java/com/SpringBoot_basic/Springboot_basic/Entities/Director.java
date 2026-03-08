@@ -1,5 +1,6 @@
 package com.SpringBoot_basic.Springboot_basic.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -15,7 +16,7 @@ public class Director {
     @Column(name="name")
     private String name;
     @OneToMany(mappedBy = "director")
-    @JsonIgnoreProperties("director")
+    @JsonIgnore
     private List<Movie> movieList;
 
     protected Director() {
