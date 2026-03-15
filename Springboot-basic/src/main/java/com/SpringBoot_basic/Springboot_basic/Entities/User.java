@@ -1,11 +1,16 @@
 package com.SpringBoot_basic.Springboot_basic.Entities;
 
 import com.SpringBoot_basic.Springboot_basic.Enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "user")
 public class User {
+    @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -19,6 +24,9 @@ public class User {
 
     @Column(name = "role",nullable = false)
     private Role role;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties("user")
+    private List<Review> reviews;
 
     public User(String username, Integer id, String email, Role role, String password) {
         this.username = username;
@@ -69,5 +77,11 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+    public List<Review> getReviews() {
+        return reviews;
+    }
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 }

@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name="movie")
@@ -30,6 +31,9 @@ public class Movie {
     @JsonIgnoreProperties("movieList")
     @JoinColumn(name = "directorid",nullable = false)
     private Director director;
+
+    @OneToMany(mappedBy = "movie")
+    private List<Review> reviews;
 
     public Movie() {
     }
