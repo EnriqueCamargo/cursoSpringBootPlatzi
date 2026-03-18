@@ -3,6 +3,7 @@ package com.SpringBoot_basic.Springboot_basic.Entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -14,7 +15,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "rating", nullable = false, precision = 2, scale = 1)
-    private float rating;
+    private BigDecimal rating;
     @Column(name = "comment")
     private String comment;
     @Column(name = "created_at",nullable = false,updatable = false)
@@ -29,7 +30,7 @@ public class Review {
     @JsonIgnoreProperties({"email","role","password","reviews"})
     private User user;
 
-    public Review(Integer id, float rating, String comment, LocalDateTime createdAt, Movie movie, User user) {
+    public Review(Integer id, BigDecimal rating, String comment, LocalDateTime createdAt, Movie movie, User user) {
         this.id = id;
         this.rating = rating;
         this.comment = comment;
@@ -49,14 +50,11 @@ public class Review {
         this.id = id;
     }
 
-    public float getRating() {
+    public BigDecimal getRating() {
         return rating;
     }
 
-    public void setRating(float rating) {
-        if (rating < 0.5f || rating > 5.0f) {
-            throw new IllegalArgumentException("La calificación debe estar entre 0.5 y 5.0");
-        }
+    public void setRating(BigDecimal rating) {
         this.rating = rating;
     }
 
