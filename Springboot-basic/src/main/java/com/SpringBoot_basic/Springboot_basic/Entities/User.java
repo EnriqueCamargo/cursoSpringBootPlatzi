@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "\"user\"")
 public class User {
     @Id
     @Column(name = "id")
@@ -18,12 +18,13 @@ public class User {
     private String username;
     @Column(name ="email",nullable = false,unique = true)
     private String email;
-
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role",nullable = false)
+    private Role role;
     @Column(name = "password",nullable = false)
     private String password;
 
-    @Column(name = "role",nullable = false)
-    private Role role;
+
     @OneToMany(mappedBy = "user")
     @JsonIgnoreProperties("user")
     private List<Review> reviews;
