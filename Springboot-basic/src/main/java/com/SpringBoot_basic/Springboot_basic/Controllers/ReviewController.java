@@ -41,7 +41,7 @@ public class ReviewController {
     @GetMapping("/api/reviews/movieId/{id}")
     public ResponseEntity<?> getAllReviewsByMovieId(@PathVariable Integer id){
         try {
-            List<Review> reviewList=reviewService.getAllReviewsByMovieId(id)
+            List<Review> reviewList=reviewService.getAllReviewsByMovieId(id);
             if(reviewList!=null){
                 return ResponseEntity.ok(reviewList);
             }else {
