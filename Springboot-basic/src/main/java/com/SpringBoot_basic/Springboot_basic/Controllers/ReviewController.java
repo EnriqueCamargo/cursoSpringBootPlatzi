@@ -108,7 +108,7 @@ public class ReviewController {
                 return ResponseEntity.ok(updatedReview);
 
             }else{
-                return ResponseEntity.status(404).body("No existe el usuario +"id);
+                return ResponseEntity.status(404).body("No existe el usuario +"+id);
             }
             }catch (Exception e){
             return ResponseEntity.status(500).body(e.getMessage());

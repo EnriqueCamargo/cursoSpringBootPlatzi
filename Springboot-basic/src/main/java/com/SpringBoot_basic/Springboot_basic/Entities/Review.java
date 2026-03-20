@@ -41,7 +41,10 @@ public class Review {
 
     public Review() {
     }
-
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
     public Integer getId() {
         return id;
     }
